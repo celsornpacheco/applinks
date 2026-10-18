@@ -33,7 +33,8 @@ export function Scanner({ notFound }: { notFound?: boolean }) {
             if (!match) return setCameraError("Este QR não é de um equipamento cadastrado.");
             stopped = true;
             controls?.stop();
-            // navegação completa: /q/ é rota de API que redireciona
+            // navegação completa: /q/ é rota de API que redireciona; router.push não segue o redirecionamento
+            // eslint-disable-next-line @next/next/no-location-assign-relative-destination
             window.location.assign(`/q/${match[1]}`);
           },
         );
