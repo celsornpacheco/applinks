@@ -2,12 +2,12 @@
 -- Uma empresa, uma fábrica. Sem multi-tenant: o controle de acesso é por perfil (RLS).
 -- Horários em timestamptz (UTC); datas de calendário em date no fuso America/Sao_Paulo.
 
-create extension if not exists pgcrypto;
+create extension if not exists pgcrypto with schema extensions;  -- Supabase: extensões ficam no schema extensions
 
 -- ───────────────────────── utilitários ─────────────────────────
 
 create or replace function set_updated_at() returns trigger
-language plpgsql as $$
+language plpgsql set search_path = public as $$
 begin
   new.updated_at := now();
   return new;
@@ -96,7 +96,7 @@ create table assets (
     check (status in ('active','inactive')),
   responsible_id uuid references profiles(id) on delete set null,
   photo_path text,                                -- Storage: assets/<id>/...
-  qr_token text not null unique default encode(gen_random_bytes(9), 'base64'),
+  qr_token text not null unique default translate(encode(extensions.gen_random_bytes(9), 'base64'), '+/', '-_'),  -- 12 caracteres, seguro em URL
   extra jsonb not null default '{}',              -- campos livres (potência, pressão, nº cavidades...)
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -471,7 +471,7 @@ $$;
 
 -- Regra de SLA mais específica para (categoria, prioridade)
 create or replace function find_sla(p_category uuid, p_priority text)
-returns sla_rules language sql stable as $$
+returns sla_rules language sql stable set search_path = public as $$
   select * from sla_rules
   where priority = p_priority and (category_id = p_category or category_id is null)
   order by category_id is null
@@ -479,7 +479,7 @@ returns sla_rules language sql stable as $$
 $$;
 
 create or replace function work_order_before() returns trigger
-language plpgsql as $$
+language plpgsql set search_path = public as $$
 declare
   r sla_rules;
   missing int;
@@ -608,7 +608,7 @@ create trigger work_order_technicians_after after insert on work_order_technicia
 
 -- leitura fora da faixa
 create or replace function answer_before() returns trigger
-language plpgsql as $$
+language plpgsql set search_path = public as $$
 declare i checklist_items;
 begin
   select * into i from checklist_items where id = new.item_id;
@@ -856,6 +856,24 @@ create policy attachments_delete on attachments for delete to authenticated
 create policy notifications_own on notifications for select to authenticated using (profile_id = auth.uid());
 create policy notifications_mark_read on notifications for update to authenticated
   using (profile_id = auth.uid()) with check (profile_id = auth.uid());
+
+-- ───────────────────────── permissões das funções ─────────────────────────
+-- Ninguém chama pela API sem login. O Supabase dá EXECUTE a anon/authenticated por padrão; tiramos.
+revoke execute on function
+  current_role_name(), is_manager(), can_see_area(uuid), can_see_work_order(uuid), find_sla(uuid, text),
+  work_order_before(), work_order_after(), technician_assigned(), answer_before(), set_updated_at(),
+  generate_preventive_work_orders(uuid), check_sla(), reschedule_plan(uuid)
+from public, anon, authenticated;
+
+-- As regras de acesso (RLS) são avaliadas como o usuário logado: ele precisa executar os ajudantes.
+grant execute on function current_role_name(), is_manager(), can_see_area(uuid), can_see_work_order(uuid)
+  to authenticated;
+-- O gestor regera um plano pela tela; a função confere is_manager().
+grant execute on function reschedule_plan(uuid) to authenticated;
+-- Gatilhos não precisam de EXECUTE para disparar. Gerador e SLA: só pg_cron (postgres) e o servidor.
+grant execute on function generate_preventive_work_orders(uuid), check_sla() to service_role;
+
+alter default privileges in schema public revoke execute on functions from public, anon;
 
 -- Agendamentos (Supabase: habilitar a extensão pg_cron no painel)
 -- select cron.schedule('preventivas-diarias', '0 6 * * *', $$select generate_preventive_work_orders()$$);  -- 03:00 em Brasília
