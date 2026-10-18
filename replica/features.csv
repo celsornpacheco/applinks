@@ -1,13 +1,13 @@
 feature,area,priority,original,clone,notes
-Login com e-mail e senha (web e app),acesso,must,yes,no,S01
-Perfis admin / gestor / técnico / solicitante,acesso,must,yes,no,S20 fonte 19
-Técnico vê só as próprias OS e áreas permitidas,acesso,must,yes,no,fonte 5
-Cadastro de unidades e áreas em hierarquia,ativos,must,yes,no,S03
-Cadastro de sistemas / tipos de equipamento,ativos,must,yes,no,S03 renomear para a fábrica
-Cadastro de equipamento com tag e dados técnicos e foto,ativos,must,yes,no,S06
-Lista de equipamentos com busca e filtros,ativos,must,yes,no,S04
-Ficha do equipamento com histórico de OS,ativos,must,yes,no,S05
-QR Code por equipamento e impressão de etiquetas,ativos,must,yes,no,S07
+Login com e-mail e senha (web e app),acesso,must,yes,yes,S01
+Perfis admin / gestor / técnico / solicitante,acesso,must,yes,yes,S20; regras no banco (RLS)
+Técnico vê só as próprias OS e áreas permitidas,acesso,must,yes,partial,regra pronta no banco; falta a tela para escolher as áreas do técnico
+Cadastro de unidades e áreas em hierarquia,ativos,must,yes,partial,cria setores; falta sub-área e editar/desativar
+Cadastro de sistemas / tipos de equipamento,ativos,must,yes,yes,S03
+Cadastro de equipamento com tag e dados técnicos e foto,ativos,must,yes,partial,falta a foto do equipamento
+Lista de equipamentos com busca e filtros,ativos,must,yes,yes,S04 busca por tag/nome e setor
+Ficha do equipamento com histórico de OS,ativos,must,yes,yes,S05 com MTTR/MTBF
+QR Code por equipamento e impressão de etiquetas,ativos,must,yes,yes,S07; etiqueta 5x6 cm
 Importar equipamentos por planilha,ativos,should,yes,no,fonte 6
 Modelos de checklist reutilizáveis,checklists,must,yes,no,S08
 Itens de checklist: texto / número / leitura / foto / seleção / sim-não,checklists,must,yes,no,fonte 5
@@ -20,30 +20,30 @@ Pausar / reativar plano,preventivas,should,partial,no,palpite
 Horas previstas por plano,preventivas,should,yes,no,fonte 2
 Calendário de atividades (mês/semana) por equipe e técnico,planejamento,must,yes,no,S11
 Remarcar OS arrastando no calendário,planejamento,could,partial,no,palpite
-Abrir chamado corretivo pela web,corretivas,must,yes,no,S14
-Abrir chamado pelo QR Code do equipamento,corretivas,must,yes,no,F04 fonte 4
+Abrir chamado corretivo pela web,corretivas,must,yes,partial,pelo app (/app/chamado); falta botão Nova OS no desktop
+Abrir chamado pelo QR Code do equipamento,corretivas,must,yes,yes,F04 testado de ponta a ponta
 Portal do solicitante sem licença (abrir e acompanhar),corretivas,should,yes,no,S15 fonte 4 e 9
-Prioridade e categoria no chamado,corretivas,must,yes,no,fonte 4
-Atribuir um ou mais técnicos à OS,ordens de serviço,must,yes,no,fonte 20
-Lista de OS com filtros (tipo / status / prioridade / técnico / período),ordens de serviço,must,yes,no,S12
+Prioridade e categoria no chamado,corretivas,must,yes,yes,fonte 4
+Atribuir um ou mais técnicos à OS,ordens de serviço,must,yes,yes,com aviso ao técnico
+Lista de OS com filtros (tipo / status / prioridade / técnico / período),ordens de serviço,must,yes,partial,"tipo, status e prioridade; falta técnico e período"
 Visão kanban por status,ordens de serviço,could,yes,no,fonte 21
-Detalhe da OS com checklist / fotos / leituras / assinatura,ordens de serviço,must,yes,no,S13
-Linha do tempo da OS,ordens de serviço,should,partial,no,palpite
-Cancelar OS com motivo,ordens de serviço,must,partial,no,palpite
-Reabrir OS,ordens de serviço,should,yes,no,fonte 4 (taxa de reabertura)
+Detalhe da OS com checklist / fotos / leituras / assinatura,ordens de serviço,must,yes,partial,fotos e assinatura; checklist na entrega 2
+Linha do tempo da OS,ordens de serviço,should,partial,yes,S13
+Cancelar OS com motivo,ordens de serviço,must,partial,yes,palpite
+Reabrir OS,ordens de serviço,should,yes,partial,gestor reabre cancelada; solicitante reabrir na entrega 4
 Avaliação do atendimento pelo solicitante,ordens de serviço,should,yes,no,fonte 15 e 18
-Regras de SLA por categoria e prioridade,SLA,must,yes,no,fonte 4
+Regras de SLA por categoria e prioridade,SLA,must,yes,partial,prazos padrão cadastrados; falta a tela de edição
 Alerta de SLA em risco / estourado,SLA,should,yes,no,fonte 4
-Registro de tempos: abertura / primeira ação / início / conclusão,SLA,must,yes,no,fonte 4
-App: lista de OS do dia / atrasadas / próximas,app,must,yes,no,M01
-App: leitor de QR que abre a ficha do ativo,app,must,yes,no,M02 M03
-App: consulta da ficha / plano / últimas OS / documentos,app,must,yes,no,M03
+Registro de tempos: abertura / primeira ação / início / conclusão,SLA,must,yes,yes,no banco
+App: lista de OS do dia / atrasadas / próximas,app,must,yes,yes,M01
+App: leitor de QR que abre a ficha do ativo,app,must,yes,yes,M02 com entrada manual da tag
+App: consulta da ficha / plano / últimas OS / documentos,app,must,yes,partial,ficha e OS; plano e documentos depois
 App: executar checklist passo a passo,app,must,yes,no,M04
-App: fotos com câmera e galeria,app,must,yes,no,M04
+App: fotos com câmera e galeria,app,must,yes,yes,comprime para <1 MB
 App: editar / anotar foto,app,could,yes,no,fonte 10
-App: assinatura do técnico e do responsável,app,must,yes,no,M05
-App: bloquear encerramento sem evidência crítica,app,must,yes,no,fonte 5
-App: abrir chamado em campo,app,must,yes,no,M06
+App: assinatura do técnico e do responsável,app,must,yes,partial,técnico; responsável depois
+App: bloquear encerramento sem evidência crítica,app,must,yes,partial,bloqueio de assinatura testado; itens críticos do checklist na entrega 2
+App: abrir chamado em campo,app,must,yes,yes,M06
 App: funcionar offline com fila e sincronização automática,app,must,yes,no,M08 parte mais difícil
 App: tratar conflito de sincronização,app,must,partial,no,M08 o original não descreve
 App: registrar horas trabalhadas na OS,app,should,yes,no,fonte 10
@@ -54,10 +54,10 @@ Controle de estoque do almoxarifado,materiais,could,no,no,sem evidência no orig
 Custo da OS (materiais + horas),custos,could,yes,no,fonte de busca: custos vinculados à OS
 Documentos vinculados a equipamento / área / sistema,documentos,should,yes,no,S17 fonte 13
 Validade de documento com aviso,documentos,could,partial,no,garantias
-Painel inicial com KPIs e gráficos,painel,must,yes,no,S02 fonte 11
+Painel inicial com KPIs e gráficos,painel,must,yes,partial,KPIs e lista; gráficos na entrega 3
 Filtros globais do painel (período / unidade / sistema),painel,should,yes,no,fonte 10
-Indicador MTTR por equipamento,indicadores,must,yes,no,S19
-Indicador MTBF por equipamento,indicadores,must,yes,no,S19
+Indicador MTTR por equipamento,indicadores,must,yes,partial,na ficha; tela de indicadores na entrega 3
+Indicador MTBF por equipamento,indicadores,must,yes,partial,na ficha; tela de indicadores na entrega 3
 Cumprimento de SLA e aderência ao plano preventivo,indicadores,must,yes,no,S19
 Taxa de reabertura,indicadores,could,yes,no,fonte 4
 Horas previstas x consumidas,indicadores,should,yes,no,fonte 2
@@ -65,10 +65,10 @@ Relatório de OS em PDF com evidências,relatórios,must,yes,no,S18 fonte 6
 Exportar relatórios para Excel,relatórios,must,yes,no,S18
 Relatório de ativos com fotos e cronograma,relatórios,should,yes,no,fonte 12
 Relatório de horas técnicas,relatórios,could,yes,no,fonte 10
-Notificações no sistema (nova OS / atribuição / SLA),notificações,must,yes,no,fonte 4
+Notificações no sistema (nova OS / atribuição / SLA),notificações,must,yes,partial,gravadas e listadas em Avisos; falta contador e atualização ao vivo
 Notificação por e-mail configurável,notificações,could,partial,no,queixa nas avaliações: falta controle de e-mail
 Notificação push no app,notificações,could,no,no,queixa nas avaliações: o original não tem
-Cadastro de usuários e equipes,acesso,must,yes,no,S20
+Cadastro de usuários e equipes,acesso,must,yes,partial,usuários sim; equipes não
 Configurar categorias / prioridades / campos do chamado,configurações,must,yes,no,S21 fonte 4
 Gatilho de preventiva por horímetro ou contador de ciclos,preventivas,could,no,no,adição para a fábrica
 Registro de máquina parada (downtime),indicadores,could,no,no,adição para MTBF real

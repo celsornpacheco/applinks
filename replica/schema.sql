@@ -536,14 +536,14 @@ begin
             and (a.value_text is not null or a.value_number is not null or a.value_bool is not null
                  or exists (select 1 from attachments f where f.work_order_id = new.id and f.checklist_item_id = i.id)));
       if missing > 0 then
-        raise exception 'OS % não pode ser concluída: % item(ns) obrigatório(s) sem resposta', new.number, missing
+        raise exception 'OS #% não pode ser concluída: % item(ns) obrigatório(s) sem resposta', new.number, missing
           using errcode = 'P0001';
       end if;
 
       select require_signature into sig_required from settings;
       if sig_required and not exists (
            select 1 from signatures s where s.work_order_id = new.id and s.signer_role = 'technician') then
-        raise exception 'OS % não pode ser concluída: falta a assinatura do técnico', new.number
+        raise exception 'OS #% não pode ser concluída: falta a assinatura do técnico', new.number
           using errcode = 'P0001';
       end if;
     end if;
@@ -868,6 +868,8 @@ from public, anon, authenticated;
 -- As regras de acesso (RLS) são avaliadas como o usuário logado: ele precisa executar os ajudantes.
 grant execute on function current_role_name(), is_manager(), can_see_area(uuid), can_see_work_order(uuid)
   to authenticated;
+-- O gatilho work_order_before roda como quem abre o chamado e calcula o prazo com find_sla()
+grant execute on function find_sla(uuid, text) to authenticated;
 -- O gestor regera um plano pela tela; a função confere is_manager().
 grant execute on function reschedule_plan(uuid) to authenticated;
 -- Gatilhos não precisam de EXECUTE para disparar. Gerador e SLA: só pg_cron (postgres) e o servidor.

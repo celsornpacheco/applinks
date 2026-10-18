@@ -35,7 +35,7 @@ function isActive(path: string, href: string) {
 }
 
 // Desktop: barra lateral escura. Gestores usam aqui.
-export function Sidebar({ current }: { current?: string }) {
+export function Sidebar({ current, footer }: { current?: string; footer?: React.ReactNode }) {
   const path = usePathname();
   const at = current ?? path;
   return (
@@ -44,7 +44,7 @@ export function Sidebar({ current }: { current?: string }) {
         <Wrench className="size-5" aria-hidden />
         Manutenção
       </div>
-      <ul className="flex flex-col gap-0.5 px-2">
+      <ul className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-2">
         {desktopNav.map(({ href, label, icon: Icon }) => {
           const active = isActive(at, href);
           return (
@@ -64,6 +64,33 @@ export function Sidebar({ current }: { current?: string }) {
           );
         })}
       </ul>
+      {footer}
+    </nav>
+  );
+}
+
+// Gestor em tela estreita: a mesma navegação numa faixa que rola de lado
+export function TopNav() {
+  const path = usePathname();
+  return (
+    <nav aria-label="Principal" className="flex gap-1 overflow-x-auto bg-sidebar px-2 py-2 text-on-sidebar">
+      {desktopNav.map(({ href, label, icon: Icon }) => {
+        const active = isActive(path, href);
+        return (
+          <Link
+            key={href}
+            href={href}
+            aria-current={active ? "page" : undefined}
+            className={cn(
+              "flex h-9 shrink-0 items-center gap-2 rounded-md px-3 text-sm whitespace-nowrap",
+              active ? "bg-sidebar-active text-on-sidebar" : "text-on-sidebar-muted",
+            )}
+          >
+            <Icon className="size-4" aria-hidden />
+            {label}
+          </Link>
+        );
+      })}
     </nav>
   );
 }
