@@ -1,7 +1,7 @@
 feature,area,priority,original,clone,notes
 Login com e-mail e senha (web e app),acesso,must,yes,yes,S01
 Perfis admin / gestor / técnico / solicitante,acesso,must,yes,yes,S20; regras no banco (RLS)
-Técnico vê só as próprias OS e áreas permitidas,acesso,must,yes,partial,regra pronta no banco; falta a tela para escolher as áreas do técnico
+Técnico vê só as próprias OS e áreas permitidas,acesso,must,yes,yes,setores por técnico em Usuários; testado
 Cadastro de unidades e áreas em hierarquia,ativos,must,yes,partial,cria setores; falta sub-área e editar/desativar
 Cadastro de sistemas / tipos de equipamento,ativos,must,yes,yes,S03
 Cadastro de equipamento com tag e dados técnicos e foto,ativos,must,yes,partial,falta a foto do equipamento
@@ -20,19 +20,19 @@ Pausar / reativar plano,preventivas,should,partial,no,palpite
 Horas previstas por plano,preventivas,should,yes,no,fonte 2
 Calendário de atividades (mês/semana) por equipe e técnico,planejamento,must,yes,no,S11
 Remarcar OS arrastando no calendário,planejamento,could,partial,no,palpite
-Abrir chamado corretivo pela web,corretivas,must,yes,partial,pelo app (/app/chamado); falta botão Nova OS no desktop
+Abrir chamado corretivo pela web,corretivas,must,yes,yes,/os/nova
 Abrir chamado pelo QR Code do equipamento,corretivas,must,yes,yes,F04 testado de ponta a ponta
 Portal do solicitante sem licença (abrir e acompanhar),corretivas,should,yes,no,S15 fonte 4 e 9
 Prioridade e categoria no chamado,corretivas,must,yes,yes,fonte 4
 Atribuir um ou mais técnicos à OS,ordens de serviço,must,yes,yes,com aviso ao técnico
-Lista de OS com filtros (tipo / status / prioridade / técnico / período),ordens de serviço,must,yes,partial,"tipo, status e prioridade; falta técnico e período"
+Lista de OS com filtros (tipo / status / prioridade / técnico / período),ordens de serviço,must,yes,yes,
 Visão kanban por status,ordens de serviço,could,yes,no,fonte 21
 Detalhe da OS com checklist / fotos / leituras / assinatura,ordens de serviço,must,yes,partial,fotos e assinatura; checklist na entrega 2
 Linha do tempo da OS,ordens de serviço,should,partial,yes,S13
 Cancelar OS com motivo,ordens de serviço,must,partial,yes,palpite
 Reabrir OS,ordens de serviço,should,yes,partial,gestor reabre cancelada; solicitante reabrir na entrega 4
 Avaliação do atendimento pelo solicitante,ordens de serviço,should,yes,no,fonte 15 e 18
-Regras de SLA por categoria e prioridade,SLA,must,yes,partial,prazos padrão cadastrados; falta a tela de edição
+Regras de SLA por categoria e prioridade,SLA,must,yes,yes,/config/chamados; testado
 Alerta de SLA em risco / estourado,SLA,should,yes,no,fonte 4
 Registro de tempos: abertura / primeira ação / início / conclusão,SLA,must,yes,yes,no banco
 App: lista de OS do dia / atrasadas / próximas,app,must,yes,yes,M01
@@ -69,7 +69,7 @@ Notificações no sistema (nova OS / atribuição / SLA),notificações,must,yes
 Notificação por e-mail configurável,notificações,could,partial,no,queixa nas avaliações: falta controle de e-mail
 Notificação push no app,notificações,could,no,no,queixa nas avaliações: o original não tem
 Cadastro de usuários e equipes,acesso,must,yes,partial,usuários sim; equipes não
-Configurar categorias / prioridades / campos do chamado,configurações,must,yes,no,S21 fonte 4
+Configurar categorias / prioridades / campos do chamado,configurações,must,yes,partial,categorias e regras gerais; campos do chamado fixos
 Gatilho de preventiva por horímetro ou contador de ciclos,preventivas,could,no,no,adição para a fábrica
 Registro de máquina parada (downtime),indicadores,could,no,no,adição para MTBF real
 Modelos PMOC e laudo com RT,conformidade,skip,yes,skip,responsabilidade legal do RT; o clone só guarda evidências

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, MapPin, Users } from "lucide-react";
+import { ChevronRight, MapPin, Timer, Users } from "lucide-react";
 import { requireMe } from "@/lib/auth";
 import { PageHeader } from "@/components/page-header";
 import { Card } from "@/components/ui/card";
@@ -11,6 +11,7 @@ export default async function ConfigPage() {
   const me = await requireMe(["admin", "manager"]);
   const items = [
     { href: "/config/locais", icon: MapPin, title: "Setores e sistemas", text: "Onde ficam as máquinas e de que tipo são." },
+    { href: "/config/chamados", icon: Timer, title: "Chamados e prazos", text: "Categorias, prazos de SLA e regras de conclusão." },
     ...(me.role === "admin" ? [{ href: "/config/usuarios", icon: Users, title: "Usuários", text: "Contas de gestores, técnicos e operadores." }] : []),
   ];
   return (

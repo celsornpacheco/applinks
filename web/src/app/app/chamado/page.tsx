@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requireMe } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { TicketForm } from "./ticket-form";
+import { TicketForm } from "@/components/ticket-form";
 
 export const metadata: Metadata = { title: "Abrir chamado" };
 

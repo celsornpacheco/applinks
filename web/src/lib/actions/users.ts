@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { requireMe } from "@/lib/auth";
 import { ROLE, type Role } from "@/lib/domain";
 import { str, type ActionResult } from "./errors";
@@ -28,6 +28,39 @@ export async function createUser(_: ActionResult, form: FormData): Promise<Actio
   if (pErr) {
     await admin.auth.admin.deleteUser(data.user.id);
     return { error: "Não foi possível criar o perfil." };
+  }
+  revalidatePath("/config/usuarios");
+  return { ok: true };
+}
+
+// Perfil e setores do técnico. Pelo cliente do usuário: o banco confere que quem altera é admin.
+export async function saveUserAccess(_: ActionResult, form: FormData): Promise<ActionResult> {
+  const me = await requireMe(["admin"]);
+  const profileId = str(form, "id");
+  const role = str(form, "role") as Role | null;
+  const fullName = str(form, "full_name");
+  if (!profileId || !role || !(role in ROLE)) return { error: "Dados inválidos." };
+  if (!fullName) return { error: "Informe o nome." };
+  if (profileId === me.id && role !== "admin") return { error: "Você não pode tirar o próprio acesso de administrador." };
+  const areaIds = form.getAll("area_id").map(String).filter((v) => /^[0-9a-f-]{36}$/.test(v));
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("profiles").update({ role, full_name: fullName }).eq("id", profileId);
+  if (error) return { error: "Não foi possível salvar o perfil." };
+
+  // setores só fazem sentido para técnico; para os outros perfis a lista fica vazia
+  const keep = role === "technician" ? areaIds : [];
+  const { data: current } = await supabase.from("profile_areas").select("area_id").eq("profile_id", profileId);
+  const have = new Set((current ?? []).map((r) => r.area_id));
+  const toAdd = keep.filter((a) => !have.has(a));
+  const toRemove = [...have].filter((a) => !keep.includes(a));
+  if (toAdd.length) {
+    const { error: e } = await supabase.from("profile_areas").insert(toAdd.map((area_id) => ({ profile_id: profileId, area_id })));
+    if (e) return { error: "Não foi possível salvar os setores." };
+  }
+  if (toRemove.length) {
+    const { error: e } = await supabase.from("profile_areas").delete().eq("profile_id", profileId).in("area_id", toRemove);
+    if (e) return { error: "Não foi possível salvar os setores." };
   }
   revalidatePath("/config/usuarios");
   return { ok: true };

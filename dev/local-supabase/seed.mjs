@@ -32,6 +32,10 @@ for (const p of people) {
     const { data, error } = await db.auth.admin.createUser({ email: p.email, password: PASSWORD, email_confirm: true });
     if (error) throw error;
     user = data.user;
+  } else {
+    // usuário que já existia: garante a senha de teste
+    const { error } = await db.auth.admin.updateUserById(user.id, { password: PASSWORD });
+    if (error) throw error;
   }
   const { error } = await db.from("profiles").upsert({ id: user.id, email: p.email, full_name: p.full_name, role: p.role });
   if (error) throw error;

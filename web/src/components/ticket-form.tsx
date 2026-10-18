@@ -16,10 +16,12 @@ type Props = {
   assets: { id: string; label: string; area: string }[];
   categories: { id: string; name: string }[];
   presetAssetId?: string;
-  origin: "qr" | "app";
+  origin: "qr" | "app" | "web";
+  // para onde ir depois de abrir (o app do celular ou o detalhe no desktop)
+  detailBase?: string;
 };
 
-export function TicketForm({ me, assets, categories, presetAssetId, origin }: Props) {
+export function TicketForm({ me, assets, categories, presetAssetId, origin, detailBase = "/app/os" }: Props) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [error, setError] = useState<string>();
@@ -47,7 +49,7 @@ export function TicketForm({ me, assets, categories, presetAssetId, origin }: Pr
       }
       if (failed) toast.error(`${failed} foto(s) não foram enviadas. Você pode anexar de novo na OS.`);
       else toast.success("Chamado aberto. A manutenção foi avisada.");
-      router.push(`/app/os/${res.id}`);
+      router.push(`${detailBase}/${res.id}`);
     });
   }
 

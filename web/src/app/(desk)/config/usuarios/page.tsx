@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { requireMe } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeader } from "@/components/page-header";
@@ -26,7 +27,7 @@ export default async function UsersPage() {
           <tbody>
             {(users ?? []).map((u) => (
               <Tr key={u.id}>
-                <Td>{u.full_name}</Td>
+                <Td><Link href={`/config/usuarios/${u.id}`} className="font-semibold text-accent hover:underline">{u.full_name}</Link></Td>
                 <Td className="text-muted">{u.email}</Td>
                 <Td>{ROLE[u.role as Role]}</Td>
                 <Td>{u.active ? <Badge tone="done">Ativo</Badge> : <Badge>Desativado</Badge>}</Td>
