@@ -1,0 +1,231 @@
+{
+  "_about": "Tokens do Inovapet Manutenção. Paleta neutra provisória (cinzas frios + azul aço); o /replica-brand troca os valores pelas cores da Inovapet, os nomes ficam. Depois de qualquer mudança: python3 .claude/skills/replica-design/contrast.py replica/design/tokens.json && npm --prefix web run tokens",
+  "color": {
+    "bg": "#ffffff",
+    "surface": "#f4f6f8",
+    "surface-raised": "#ffffff",
+    "sidebar": "#1b2430",
+    "on-sidebar": "#e6eaef",
+    "on-sidebar-muted": "#a3adba",
+    "sidebar-active": "#2c3846",
+    "border": "#dfe3e8",
+    "border-input": "#7d8794",
+    "text": "#141a22",
+    "text-muted": "#545e6b",
+    "accent": "#1f5aa6",
+    "accent-hover": "#184a8a",
+    "on-accent": "#ffffff",
+    "focus": "#1f5aa6",
+    "danger": "#b42318",
+    "danger-hover": "#912018",
+    "on-danger": "#ffffff",
+    "success": "#1a6b43",
+    "warning": "#8a4b00",
+    "info-fg": "#1e4f8a",
+    "info-bg": "#e6eef8",
+    "progress-fg": "#7a4300",
+    "progress-bg": "#fff1d6",
+    "waiting-fg": "#5b3a9e",
+    "waiting-bg": "#efe9fa",
+    "done-fg": "#1a6b43",
+    "done-bg": "#e3f4ea",
+    "neutral-fg": "#4a5361",
+    "neutral-bg": "#eceff3",
+    "urgent-fg": "#b42318",
+    "urgent-bg": "#fde8e6",
+    "high-fg": "#9a3a06",
+    "high-bg": "#ffeadb"
+  },
+  "pairs": [
+    [
+      "text",
+      "bg"
+    ],
+    [
+      "text",
+      "surface"
+    ],
+    [
+      "text-muted",
+      "bg"
+    ],
+    [
+      "text-muted",
+      "surface"
+    ],
+    [
+      "on-sidebar",
+      "sidebar"
+    ],
+    [
+      "on-sidebar-muted",
+      "sidebar"
+    ],
+    [
+      "on-sidebar",
+      "sidebar-active"
+    ],
+    [
+      "on-accent",
+      "accent"
+    ],
+    [
+      "on-accent",
+      "accent-hover"
+    ],
+    [
+      "accent",
+      "bg"
+    ],
+    [
+      "accent",
+      "surface"
+    ],
+    [
+      "on-danger",
+      "danger"
+    ],
+    [
+      "danger",
+      "bg"
+    ],
+    [
+      "success",
+      "bg"
+    ],
+    [
+      "warning",
+      "bg"
+    ],
+    [
+      "info-fg",
+      "info-bg"
+    ],
+    [
+      "progress-fg",
+      "progress-bg"
+    ],
+    [
+      "waiting-fg",
+      "waiting-bg"
+    ],
+    [
+      "done-fg",
+      "done-bg"
+    ],
+    [
+      "neutral-fg",
+      "neutral-bg"
+    ],
+    [
+      "urgent-fg",
+      "urgent-bg"
+    ],
+    [
+      "high-fg",
+      "high-bg"
+    ],
+    [
+      "border-input",
+      "bg",
+      "ui"
+    ],
+    [
+      "border-input",
+      "surface",
+      "ui"
+    ],
+    [
+      "focus",
+      "bg",
+      "ui"
+    ],
+    [
+      "focus",
+      "surface",
+      "ui"
+    ]
+  ],
+  "font": {
+    "sans": "\"Inter Variable\", Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+    "mono": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+  },
+  "type": {
+    "xs": {
+      "size": 12,
+      "line": 16,
+      "weight": 500
+    },
+    "sm": {
+      "size": 14,
+      "line": 20,
+      "weight": 400
+    },
+    "base": {
+      "size": 16,
+      "line": 24,
+      "weight": 400
+    },
+    "lg": {
+      "size": 18,
+      "line": 26,
+      "weight": 600
+    },
+    "xl": {
+      "size": 22,
+      "line": 30,
+      "weight": 700
+    },
+    "2xl": {
+      "size": 28,
+      "line": 36,
+      "weight": 700
+    },
+    "display": {
+      "size": 36,
+      "line": 44,
+      "weight": 700
+    }
+  },
+  "space": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64
+  ],
+  "radius": {
+    "sm": 6,
+    "md": 8,
+    "lg": 12,
+    "pill": 999
+  },
+  "shadow": {
+    "card": "0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08)",
+    "pop": "0 12px 32px rgba(16,24,40,.18)"
+  },
+  "motion": {
+    "fast": "120ms",
+    "base": "200ms",
+    "ease": "cubic-bezier(.2,.8,.2,1)"
+  },
+  "layout": {
+    "sidebar": 240,
+    "header": 56,
+    "content-max": 1280,
+    "touch-min": 48,
+    "bottom-nav": 64,
+    "breakpoints": {
+      "sm": 640,
+      "md": 768,
+      "lg": 1024,
+      "xl": 1280
+    }
+  }
+}
