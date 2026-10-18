@@ -1,0 +1,80 @@
+feature,area,priority,original,clone,notes
+Login com e-mail e senha (web e app),acesso,must,yes,no,S01
+Perfis admin / gestor / técnico / solicitante,acesso,must,yes,no,S20 fonte 19
+Técnico vê só as próprias OS e áreas permitidas,acesso,must,yes,no,fonte 5
+Cadastro de unidades e áreas em hierarquia,ativos,must,yes,no,S03
+Cadastro de sistemas / tipos de equipamento,ativos,must,yes,no,S03 renomear para a fábrica
+Cadastro de equipamento com tag e dados técnicos e foto,ativos,must,yes,no,S06
+Lista de equipamentos com busca e filtros,ativos,must,yes,no,S04
+Ficha do equipamento com histórico de OS,ativos,must,yes,no,S05
+QR Code por equipamento e impressão de etiquetas,ativos,must,yes,no,S07
+Importar equipamentos por planilha,ativos,should,yes,no,fonte 6
+Modelos de checklist reutilizáveis,checklists,must,yes,no,S08
+Itens de checklist: texto / número / leitura / foto / seleção / sim-não,checklists,must,yes,no,fonte 5
+Item obrigatório e item crítico,checklists,must,yes,no,fonte 3 e 5
+Leitura com faixa mín/máx e alerta fora da faixa,checklists,should,yes,no,fonte 3 (critérios de aceite)
+Plano preventivo com periodicidade (dias/semanas/meses/anos),preventivas,must,yes,no,S10
+Plano aplicado a vários equipamentos ou a uma área/sistema,preventivas,should,yes,no,fonte 3
+Geração automática das OS preventivas,preventivas,must,yes,no,fonte 3
+Pausar / reativar plano,preventivas,should,partial,no,palpite
+Horas previstas por plano,preventivas,should,yes,no,fonte 2
+Calendário de atividades (mês/semana) por equipe e técnico,planejamento,must,yes,no,S11
+Remarcar OS arrastando no calendário,planejamento,could,partial,no,palpite
+Abrir chamado corretivo pela web,corretivas,must,yes,no,S14
+Abrir chamado pelo QR Code do equipamento,corretivas,must,yes,no,F04 fonte 4
+Portal do solicitante sem licença (abrir e acompanhar),corretivas,should,yes,no,S15 fonte 4 e 9
+Prioridade e categoria no chamado,corretivas,must,yes,no,fonte 4
+Atribuir um ou mais técnicos à OS,ordens de serviço,must,yes,no,fonte 20
+Lista de OS com filtros (tipo / status / prioridade / técnico / período),ordens de serviço,must,yes,no,S12
+Visão kanban por status,ordens de serviço,could,yes,no,fonte 21
+Detalhe da OS com checklist / fotos / leituras / assinatura,ordens de serviço,must,yes,no,S13
+Linha do tempo da OS,ordens de serviço,should,partial,no,palpite
+Cancelar OS com motivo,ordens de serviço,must,partial,no,palpite
+Reabrir OS,ordens de serviço,should,yes,no,fonte 4 (taxa de reabertura)
+Avaliação do atendimento pelo solicitante,ordens de serviço,should,yes,no,fonte 15 e 18
+Regras de SLA por categoria e prioridade,SLA,must,yes,no,fonte 4
+Alerta de SLA em risco / estourado,SLA,should,yes,no,fonte 4
+Registro de tempos: abertura / primeira ação / início / conclusão,SLA,must,yes,no,fonte 4
+App: lista de OS do dia / atrasadas / próximas,app,must,yes,no,M01
+App: leitor de QR que abre a ficha do ativo,app,must,yes,no,M02 M03
+App: consulta da ficha / plano / últimas OS / documentos,app,must,yes,no,M03
+App: executar checklist passo a passo,app,must,yes,no,M04
+App: fotos com câmera e galeria,app,must,yes,no,M04
+App: editar / anotar foto,app,could,yes,no,fonte 10
+App: assinatura do técnico e do responsável,app,must,yes,no,M05
+App: bloquear encerramento sem evidência crítica,app,must,yes,no,fonte 5
+App: abrir chamado em campo,app,must,yes,no,M06
+App: funcionar offline com fila e sincronização automática,app,must,yes,no,M08 parte mais difícil
+App: tratar conflito de sincronização,app,must,partial,no,M08 o original não descreve
+App: registrar horas trabalhadas na OS,app,should,yes,no,fonte 10
+App: solicitar material a partir da OS,materiais,should,yes,no,M07 fonte 18
+Cadastro de materiais / peças,materiais,should,partial,no,fonte 18
+Status da solicitação de material com notificação,materiais,should,yes,no,S16 fonte 18
+Controle de estoque do almoxarifado,materiais,could,no,no,sem evidência no original; útil na fábrica
+Custo da OS (materiais + horas),custos,could,yes,no,fonte de busca: custos vinculados à OS
+Documentos vinculados a equipamento / área / sistema,documentos,should,yes,no,S17 fonte 13
+Validade de documento com aviso,documentos,could,partial,no,garantias
+Painel inicial com KPIs e gráficos,painel,must,yes,no,S02 fonte 11
+Filtros globais do painel (período / unidade / sistema),painel,should,yes,no,fonte 10
+Indicador MTTR por equipamento,indicadores,must,yes,no,S19
+Indicador MTBF por equipamento,indicadores,must,yes,no,S19
+Cumprimento de SLA e aderência ao plano preventivo,indicadores,must,yes,no,S19
+Taxa de reabertura,indicadores,could,yes,no,fonte 4
+Horas previstas x consumidas,indicadores,should,yes,no,fonte 2
+Relatório de OS em PDF com evidências,relatórios,must,yes,no,S18 fonte 6
+Exportar relatórios para Excel,relatórios,must,yes,no,S18
+Relatório de ativos com fotos e cronograma,relatórios,should,yes,no,fonte 12
+Relatório de horas técnicas,relatórios,could,yes,no,fonte 10
+Notificações no sistema (nova OS / atribuição / SLA),notificações,must,yes,no,fonte 4
+Notificação por e-mail configurável,notificações,could,partial,no,queixa nas avaliações: falta controle de e-mail
+Notificação push no app,notificações,could,no,no,queixa nas avaliações: o original não tem
+Cadastro de usuários e equipes,acesso,must,yes,no,S20
+Configurar categorias / prioridades / campos do chamado,configurações,must,yes,no,S21 fonte 4
+Gatilho de preventiva por horímetro ou contador de ciclos,preventivas,could,no,no,adição para a fábrica
+Registro de máquina parada (downtime),indicadores,could,no,no,adição para MTBF real
+Modelos PMOC e laudo com RT,conformidade,skip,yes,skip,responsabilidade legal do RT; o clone só guarda evidências
+Modelos de checklist prontos do Leankeep,checklists,skip,yes,skip,conteúdo deles; a Inovapet escreve os próprios
+Gestão multi-cliente para empresas de facilities,plataforma,skip,yes,skip,uso interno de uma empresa
+Cobrança por usuário e planos,plataforma,skip,yes,skip,uso interno
+Integração Power BI / API de ocorrências do Leankeep,integrações,skip,yes,skip,clonar a função via exportação ou API própria e não a deles
+Página dedicada / programa de indicação,marketing,skip,yes,skip,negócio do Leankeep e não manutenção
