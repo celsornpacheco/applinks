@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const PUBLIC = ["/login", "/design"];
+const PUBLIC = ["/login", "/design", "/privacidade"];
 
 // Renova a sessão do Supabase a cada requisição e manda quem não entrou para o login.
 // A checagem de verdade (perfil, permissão) acontece nas páginas e no banco.

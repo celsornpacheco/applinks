@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Wrench } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { LoginForm } from "./login-form";
@@ -21,6 +22,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
         <Card className="p-5">
           <LoginForm next={typeof next === "string" ? next : undefined} notice={notice} />
         </Card>
+        <Link href="/privacidade" className="text-center text-xs font-normal text-muted hover:underline">Privacidade</Link>
       </div>
     </main>
   );
